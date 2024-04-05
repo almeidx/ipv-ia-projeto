@@ -1,0 +1,24 @@
+from distances import distancias_cidades
+
+
+def custo_uniforme(origem, destino):
+    fila = [(0, origem, [])]  # (custo acumulado, cidade atual, caminho até agora)
+    visitados = set()
+
+    while fila:
+        fila.sort()  # Ordenar a fila pela prioridade (custo acumulado)
+        custo, cidade, caminho = fila.pop(0)  # Pegar o primeiro elemento da fila
+
+        if cidade == destino:
+            return custo, caminho + [cidade]
+
+        if cidade in visitados:
+            continue
+
+        visitados.add(cidade)
+
+        for proxima_cidade, custo_caminho in distancias_cidades[cidade].items():
+            if proxima_cidade not in visitados:
+                fila.append((custo + custo_caminho, proxima_cidade, caminho + [cidade]))
+
+    return float("inf"), None
