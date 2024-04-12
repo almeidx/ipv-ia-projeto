@@ -23,7 +23,11 @@ def main():
         print("3 - Sôfrega")
         print("4 - A*")
         print("5 - Sair")
-        option = int(input("Escolha: "))
+
+        try:
+            option = int(input("Escolha: "))
+        except ValueError:
+            option = -1
 
     clear()
 
@@ -35,7 +39,7 @@ def main():
 
         result = custo_uniforme(origem, destino)
 
-        print(f"Distância de {origem} a {destino}: {str(result[0])}km")
+        print(f"Distância de {origem} a {destino}: {fmt_distance(result[0])}")
         print_caminho(result[1])
     elif option == 2:
         print("Algoritmo de procura Cega - Profundidade Limitada")
@@ -53,24 +57,26 @@ def main():
             exit(0)
 
         print(
-            f"Distância de {origem} a {destino} com limite de {str(limite)}: {str(result[0])}km"
+            f"Distância de {origem} a {destino} com limite de {str(limite)}: {fmt_distance(result[0])}"
         )
         print_caminho(result[1])
     elif option == 3:
         print("Algoritmo de procura Heurística - Sôfrega")
-        print("Destino é Faro")
 
         origem = validar_distrito(input("Origem: "))
+        destino = validar_distrito(input("Destino: "))
 
-        result = sofrega(origem)
-        print(f"Distância de {origem} a Faro: {str(result)}km")
+        result = sofrega(origem, destino)
+        print(f"Distância de {origem} a {destino}: {fmt_distance(result[0])}")
+        print_caminho(result[1])
     elif option == 4:
         print("Algoritmo de procura Heurística - A*")
 
         origem = validar_distrito(input("Origem: "))
+        destino = validar_distrito(input("Destino: "))
 
-        result = a_star(origem)
-        print(f"Distância de {origem} a Faro: {str(result[0])}km")
+        result = a_star(origem, destino)
+        print(f"Distância de {origem} a {destino}: {fmt_distance(result[0])}")
         print_caminho(result[1])
     else:
         exit(0)
@@ -87,6 +93,10 @@ def print_caminho(caminho):
             print(cidade)
         else:
             print(cidade, end=" -> ")
+
+
+def fmt_distance(dist):
+    return f"{dist:.2f} km"
 
 
 def validar_distrito(county):
