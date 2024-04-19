@@ -1,13 +1,14 @@
 import tkinter as tk
 from tkinter import ttk
-from distances import distancias_cidades
+import tkintermapview as mv
+from distances import distancias_cidades, coordenadas_distritos
 from algorithms.custo_uniforme import custo_uniforme
 from algorithms.profundidade_limitada import profundidade_limitada
 from algorithms.sofrega import sofrega
 from algorithms.a_star import a_star
 
 
-def run_algorithm():
+def run_algorithm(map_widget: mv.TkinterMapView):
     origem = origemSelectBox.get()
     destino = destinoSelectBox.get()
     algoritmo = algoritmoSelectBox.get()
@@ -25,16 +26,39 @@ def run_algorithm():
 
     resultLabel.config(text=f"Distância de {origem} a {destino}: {result[0]} km")
 
+    map_widget.delete_all_marker()
+    map_widget.delete_all_path()
+
     if result[1] is not None:
         caminho_str = " -> ".join(result[1])
         caminhoLabel.config(text=f"Caminho: {caminho_str}")
+
+        first = result[1][0]
+        last = result[1][-1]
+
+        lat1, lon1 = coordenadas_distritos[first]
+        lat2, lon2 = coordenadas_distritos[last]
+
+        map_widget.set_marker(lat1, lon1, text=first)
+        map_widget.set_marker(lat2, lon2, text=last)
+
+        # path_1 = map_widget.set_path([marker_2.position, marker_3.position, (52.57, 13.4), (52.55, 13.35)])
+
+        for i in range(len(result[1]) - 1):
+            distrito1 = result[1][i]
+            distrito2 = result[1][i + 1]
+
+            lat1, lon1 = coordenadas_distritos[distrito1]
+            lat2, lon2 = coordenadas_distritos[distrito2]
+
+            map_widget.set_path([(lat1, lon1), (lat2, lon2)])
     else:
         caminhoLabel.config(text="Não foi possível encontrar um caminho.")
 
 
 window = tk.Tk()
 window.title("Calculadora de Distâncias")
-window.geometry("400x300")
+window.geometry("800x600")
 
 distritos = list(distancias_cidades.keys())
 distritos.sort()
@@ -53,7 +77,13 @@ algoritmoSelectBox = ttk.Combobox(
 )
 algoritmoSelectBox.pack(pady=5)
 
-submit = ttk.Button(window, text="Calcular", command=lambda: run_algorithm())
+map_widget = mv.TkinterMapView(window, width=320, height=320, corner_radius=0)
+map_widget.place(relx=0.5, rely=0.65, anchor=tk.CENTER)
+
+map_widget.set_position(40.2028, -8.4139)
+map_widget.set_zoom(6.5)
+
+submit = ttk.Button(window, text="Calcular", command=lambda: run_algorithm(map_widget))
 submit.pack(pady=5)
 
 resultLabel = ttk.Label(window, text="")
