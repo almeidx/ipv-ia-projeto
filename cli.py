@@ -1,11 +1,3 @@
-# Procura Cega:
-# - Custo Uniforme
-# - Profundidade Limitada
-
-# Heuristica:
-# - A* = Sôfrega + Custo Uniforme
-# - Sôfrega
-
 from algorithms.custo_uniforme import custo_uniforme
 from algorithms.profundidade_limitada import profundidade_limitada
 from algorithms.sofrega import sofrega

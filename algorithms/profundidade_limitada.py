@@ -17,7 +17,7 @@ def profundidade_limitada(origem, destino, limite):
                 )
 
                 if resultado is not None:
-                    return distancia_resultado, resultado
+                    return resultado, distancia_resultado
 
         return 0, None
 

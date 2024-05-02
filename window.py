@@ -13,6 +13,9 @@ def run_algorithm(map_widget: mv.TkinterMapView):
     destino = destinoSelectBox.get()
     algoritmo = algoritmoSelectBox.get()
 
+    if origem == "" or destino == "" or algoritmo == "":
+        return
+
     if algoritmo == "Custo Uniforme":
         result = custo_uniforme(origem, destino)
     elif algoritmo == "Profundidade Limitada":
@@ -42,8 +45,6 @@ def run_algorithm(map_widget: mv.TkinterMapView):
         map_widget.set_marker(lat1, lon1, text=first)
         map_widget.set_marker(lat2, lon2, text=last)
 
-        # path_1 = map_widget.set_path([marker_2.position, marker_3.position, (52.57, 13.4), (52.55, 13.35)])
-
         for i in range(len(result[1]) - 1):
             distrito1 = result[1][i]
             distrito2 = result[1][i + 1]
@@ -58,7 +59,7 @@ def run_algorithm(map_widget: mv.TkinterMapView):
 
 window = tk.Tk()
 window.title("Calculadora de Distâncias")
-window.geometry("800x600")
+window.geometry("800x700")
 
 distritos = list(distancias_cidades.keys())
 distritos.sort()
@@ -80,8 +81,11 @@ algoritmoSelectBox.pack(pady=5)
 map_widget = mv.TkinterMapView(window, width=320, height=320, corner_radius=0)
 map_widget.place(relx=0.5, rely=0.65, anchor=tk.CENTER)
 
-map_widget.set_position(40.2028, -8.4139)
-map_widget.set_zoom(6.5)
+map_widget.set_tile_server(
+    "https://mt0.google.com/vt/lyrs=s&hl=en&x={x}&y={y}&z={z}&s=Ga"
+)
+
+map_widget.fit_bounding_box((41.8606210, -9.4482227), (36.9051659, -6.7675586))
 
 submit = ttk.Button(window, text="Calcular", command=lambda: run_algorithm(map_widget))
 submit.pack(pady=5)

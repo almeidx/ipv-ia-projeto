@@ -1,5 +1,5 @@
 from math import sin, cos, sqrt, atan2, radians
-from distances import distancias_faro
+from distances import distancias_faro, coordenadas_distritos
 
 
 def calcular_distancia_coordenadas(origem, destino):
@@ -31,24 +31,3 @@ def calcular_distancia_coordenadas(origem, destino):
     distancia = raio_terra * c
 
     return distancia
-
-
-coordenadas_distritos = {
-    "Aveiro": (40.6333, -8.65),
-    "Beja": (38.0333, -7.8833),
-    "Braga": (41.5503, -8.42),
-    "Bragança": (41.8067, -6.7589),
-    "Castelo Branco": (39.8167, -7.5),
-    "Coimbra": (40.2028, -8.4139),
-    "Évora": (38.5667, -7.9),
-    "Guarda": (40.5333, -7.3333),
-    "Leiria": (39.75, -8.8),
-    "Lisboa": (38.7253, -9.15),
-    "Portalegre": (39.3167, -7.4167),
-    "Porto": (41.1621, -8.622),
-    "Santarém": (39.2339, -8.6861),
-    "Setúbal": (38.5243, -8.8926),
-    "Viana do Castelo": (41.7, -8.8333),
-    "Vila Real": (41.2958, -7.7461),
-    "Viseu": (40.6667, -7.9167),
-}
