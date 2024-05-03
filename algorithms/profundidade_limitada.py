@@ -1,4 +1,4 @@
-from distances import distancias_cidades
+from distances import distancias_entre_distritos
 
 
 def profundidade_limitada(origem, destino, limite):
@@ -7,11 +7,13 @@ def profundidade_limitada(origem, destino, limite):
             return distancia, caminho + [cidade]
 
         if profundidade == 0:
-            return 0, None
+            return None, None
 
-        for proxima_cidade in distancias_cidades[cidade]:
+        for proxima_cidade in distancias_entre_distritos[cidade]:
             if proxima_cidade not in caminho:
-                nova_distancia = distancia + distancias_cidades[cidade][proxima_cidade]
+                nova_distancia = (
+                    distancia + distancias_entre_distritos[cidade][proxima_cidade]
+                )
                 resultado, distancia_resultado = dfs(
                     proxima_cidade, caminho + [cidade], profundidade - 1, nova_distancia
                 )
@@ -19,6 +21,10 @@ def profundidade_limitada(origem, destino, limite):
                 if resultado is not None:
                     return resultado, distancia_resultado
 
-        return 0, None
+        return None, None
 
-    return dfs(origem, [], limite, 0)
+    resultado, caminho = dfs(origem, [], limite, 0)
+    if resultado is None:
+        return float("inf"), None
+
+    return resultado, caminho

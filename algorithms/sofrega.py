@@ -1,4 +1,4 @@
-from distances import distancias_cidades
+from distances import distancias_entre_distritos
 from coordenadas import calcular_distancia_coordenadas
 
 
@@ -11,12 +11,12 @@ def sofrega(origem, destino):
     caminho = [origem]
 
     while True:
-        filhos = distancias_cidades[cidade_atual]
+        filhos = distancias_entre_distritos[cidade_atual]
         cidade_mais_proxima = min(
             filhos, key=lambda x: calcular_distancia_coordenadas(x, destino)
         )
 
-        dist += distancias_cidades[cidade_atual][cidade_mais_proxima]
+        dist += distancias_entre_distritos[cidade_atual][cidade_mais_proxima]
         cidade_atual = cidade_mais_proxima
 
         caminho.append(cidade_atual)

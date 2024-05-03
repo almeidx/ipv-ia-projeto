@@ -4,10 +4,7 @@ from distances import distancias_faro, coordenadas_distritos
 
 def calcular_distancia_coordenadas(origem, destino):
     if destino == "Faro" or origem == "Faro":
-        if destino == "Faro":
-            return distancias_faro[origem]
-        else:
-            return distancias_faro[destino]
+        return distancias_faro[origem if destino == "Faro" else destino]
 
     lat1, lon1 = coordenadas_distritos[origem]
     lat2, lon2 = coordenadas_distritos[destino]

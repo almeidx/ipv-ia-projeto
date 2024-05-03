@@ -2,7 +2,7 @@ from algorithms.custo_uniforme import custo_uniforme
 from algorithms.profundidade_limitada import profundidade_limitada
 from algorithms.sofrega import sofrega
 from algorithms.a_star import a_star
-from distances import distancias_cidades
+from distances import distancias_entre_distritos
 
 
 def main():
@@ -21,7 +21,7 @@ def main():
         except ValueError:
             option = -1
 
-    clear()
+    clear_terminal()
 
     if option == 1:
         print("Algoritmo de procura Cega - Custo Uniforme")
@@ -38,18 +38,18 @@ def main():
 
         origem = validar_distrito(input("Origem: "))
         destino = validar_distrito(input("Destino: "))
-        limite = int(input("Limite: "))
+        profundidade = int(input("Limite: "))
 
-        result = profundidade_limitada(origem, destino, limite)
+        result = profundidade_limitada(origem, destino, profundidade)
 
         if result[1] is None:
             print(
-                f"Não foi possível encontrar um caminho de {origem} a {destino} com limite de {str(limite)}."
+                f"Não foi possível encontrar um caminho de {origem} a {destino} com limite de {str(profundidade)}."
             )
             exit(0)
 
         print(
-            f"Distância de {origem} a {destino} com limite de {str(limite)}: {fmt_distance(result[0])}"
+            f"Distância de {origem} a {destino} com limite de {str(profundidade)}: {fmt_distance(result[0])}"
         )
         print_caminho(result[1])
     elif option == 3:
@@ -74,7 +74,7 @@ def main():
         exit(0)
 
 
-def clear():
+def clear_terminal():
     print("\033[H\033[J")
 
 
@@ -92,7 +92,7 @@ def fmt_distance(dist):
 
 
 def validar_distrito(county):
-    if county not in distancias_cidades:
+    if county not in distancias_entre_distritos:
         print(f"O distrito {county} não existe.")
         exit(0)
 

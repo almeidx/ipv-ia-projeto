@@ -40,7 +40,7 @@ coordenadas_distritos = {
     "Viseu": (40.6667, -7.9167),
 }
 
-distancias_cidades = {
+distancias_entre_distritos = {
     "Aveiro": {"Porto": 68, "Viseu": 95, "Coimbra": 68, "Leiria": 115},
     "Beja": {"Évora": 78, "Faro": 152, "Setúbal": 142},
     "Braga": {"Viana do Castelo": 48, "Vila Real": 106, "Porto": 53},
@@ -57,10 +57,10 @@ distancias_cidades = {
 }
 
 
-# Inverter as distâncias para serem bidirecionais
-for cidade, distancias in list(distancias_cidades.items()):
-    for inner_cidade, inner_distancia in list(distancias.items()):
-        if inner_cidade not in distancias_cidades:
-            distancias_cidades[inner_cidade] = {}
+# Tornar a matriz de distâncias bidirecional
+for distrito, distancias in list(distancias_entre_distritos.items()):
+    for inner_distrito, inner_distancia in list(distancias.items()):
+        if inner_distrito not in distancias_entre_distritos:
+            distancias_entre_distritos[inner_distrito] = {}
 
-        distancias_cidades[inner_cidade][cidade] = inner_distancia
+        distancias_entre_distritos[inner_distrito][distrito] = inner_distancia

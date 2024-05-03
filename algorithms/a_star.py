@@ -1,10 +1,10 @@
-from distances import distancias_cidades, distancias_faro
+from distances import distancias_entre_distritos, distancias_faro
 from coordenadas import calcular_distancia_coordenadas
 
 
 def a_star(origem, destino):
     fila = [(0, origem)]  # (custo acumulado + heurística, cidade)
-    custo_acumulado = {cidade: float("inf") for cidade in distancias_cidades}
+    custo_acumulado = {cidade: float("inf") for cidade in distancias_entre_distritos}
     custo_acumulado[origem] = 0
     caminho = {}
 
@@ -18,7 +18,7 @@ def a_star(origem, destino):
                 caminho_completo.append(cidade_atual)
             return custo_acumulado[destino], caminho_completo[::-1]
 
-        for cidade_vizinha, custo in distancias_cidades[cidade_atual].items():
+        for cidade_vizinha, custo in distancias_entre_distritos[cidade_atual].items():
             novo_custo = custo_acumulado[cidade_atual] + custo
             if novo_custo < custo_acumulado[cidade_vizinha]:
                 custo_acumulado[cidade_vizinha] = novo_custo
